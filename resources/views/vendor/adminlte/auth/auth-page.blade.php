@@ -110,7 +110,11 @@
                     <input type="email" name="email" placeholder="Email" required>
                     <input type="password" name="password" placeholder="Password" required>
                     <button type="submit">Login</button>
+                   
                 </form>
+                <a href="{{ route('google.login') }}" class="btn btn-danger btn-block">
+                    <i class="fab fa-google"></i> Login with Google
+                </a>
             </div>
         </div>
     </div>

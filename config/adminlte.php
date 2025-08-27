@@ -554,5 +554,5 @@ return [
 
     'livewire' => true,
 
-    'gmail_login' => false,
+    'gmail_login' => true,
 ];
