@@ -2,13 +2,16 @@
 <div class="card-body">
     <div class="row">
         <div class="col-lg-3 col-6">
-            <div class="card small-box bg-purple">
+            <div class="card small-box bg-purple ">
                 <div class="card-header">
                     <div class="inner">
                         <h3><p>BEVI</p></h3>
-                        <div class="text-center table-responsive"><i class="sparkline" data-type="line" data-values={{ $bevaMonth }}></i></div>
-
-                        <h1 class="text-center">{{number_format($beviTotal, 2, '.', ',')}}</h1>
+                        <div class="text-center table-responsive"><i class="sparkline" data-type="line" data-values={{ $beviMonth }}></i></div>
+                        <div class="text-center">
+                            <h1 class="mobile-only">{{$short($beviTotal, 2, '.', ',')}}</h1>
+                            <h1 class="desktop-only">{{number_format($beviTotal, 2, '.', ',')}}</h1>
+                        </div>
+                        
                         @if($percent_bevi >= 0)
                             <h4 class="description-percentage text-success text-center"><i class="fas fa-caret-up"></i>{{number_format($percent_bevi, 1)}}%</h4>
                         @elseif($percent_bevi < 0)
@@ -48,7 +51,11 @@
                     <div class="inner">
                         <h3><p>BEVA</p></h3>
                         <div class="text-center table-responsive"><i class="sparkline" data-type="line" data-values={{ $bevaMonth }}></i></div>
-                        <h1 class="text-center">{{number_format($bevaTotal, 2, '.', ',')}}</h1>
+                        <div class="text-center">
+                            <h1 class="mobile-only">{{$short($bevaTotal, 2, '.', ',')}}</h1>
+                            <h1 class="desktop-only">{{number_format($bevaTotal, 2, '.', ',')}}</h1>
+                        </div>
+
                         @if($percent_beva >= 0)
                             <h4 class="description-percentage text-success text-center"><i class="fas fa-caret-up"></i>{{number_format($percent_beva, 1)}}%</h4>
                         @elseif($percent_beva < 0)
@@ -89,7 +96,11 @@
                     <div class="inner">
                         <h3><p>BIG I</p></h3>
                         <div class="text-center table-responsive"><i class="sparklines" data-type="line" data-values={{ $bigiMonth }}></i></div>
-                        <h1 class="text-center">{{number_format($bigiTotal, 2, '.', ',')}}</h1>
+                        <div class="text-center">
+                            <h1 class="mobile-only">{{$short($bigiTotal, 2, '.', ',')}}</h1>
+                            <h1 class="desktop-only">{{number_format($bigiTotal, 2, '.', ',')}}</h1>
+                        </div>
+
                         @if($percent_bigi >= 0)
                             <h4 class="description-percentage text-success text-center"><i class="fas fa-caret-up"></i>{{number_format($percent_bigi, 1)}}%</h4>
                         @elseif($percent_bigi < 0)
@@ -129,7 +140,11 @@
                     <div class="inner">
                         <h3><p>TOTAL</p></h3>
                         <div class="text-center table-responsive"><i class="sparklines" data-type="line" data-values={{ $allMonth }}></i></div>
-                        <h1 class="text-center">{{number_format($allTotal, 2, '.', ',')}}</h1>
+                        <div class="text-center">
+                            <h1 class="mobile-only">{{$short($allTotal, 2, '.', ',')}}</h1>
+                            <h1 class="desktop-only">{{number_format($allTotal, 2, '.', ',')}}</h1>
+                        </div>
+
                         @if($percent_all >= 0)
                             <h4 class="description-percentage text-success text-center"><i class="fas fa-caret-up"></i>{{number_format($percent_all, 1)}}%</h4>
                         @elseif($percent_all < 0)
@@ -197,11 +212,7 @@
                                 if ($percentBrand >= 75) $color = 'bg-purple';
                                 elseif ($percentBrand >= 50) $color = 'bg-info';
                                 elseif ($percentBrand >= 25) $color = 'bg-warning';
-                                $short = function($num) {
-                                    if ($num >= 1_000_000) return round($num / 1_000_000, 1) . 'M';
-                                    if ($num >= 1_000) return round($num / 1_000, 1) . 'K';
-                                    return number_format($num);
-                                };
+                                
                             @endphp
                             <div class="progress-group">
                                 {{$brand}}
@@ -359,7 +370,7 @@
                     <h3 class="card-title">
                         <i class="fas fa-building mr-1"></i>
                         Top Accounts Sales
-                    </h3>
+                    </h3><br>
                     <div class="card-tools">
                         <ul class="nav nav-pills ml-auto">
                             <li class="nav-item">

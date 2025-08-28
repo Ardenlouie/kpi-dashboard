@@ -32,7 +32,14 @@ class HomeController extends Controller
 
     public function fetchData()
     {
-         $year = 2025;
+        $short = function($num) {
+            if ($num >= 1_000_000_000) return round($num / 1_000_000_000, 1) . 'B';
+            if ($num >= 1_000_000) return round($num / 1_000_000, 1) . 'M';
+            if ($num >= 1_000) return round($num / 1_000, 1) . 'K';
+            return number_format($num);
+        };
+
+        $year = 2025;
         $month1 = 1;
         $month2 = (int) date('m');
         $months = [];
@@ -251,6 +258,7 @@ class HomeController extends Controller
             'bevaTotals' => $bevaTotals,
             'bigiLabels' => $bigiLabels,
             'bigiTotals' => $bigiTotals,
+            'short' => $short,
 
         ]);
     }
