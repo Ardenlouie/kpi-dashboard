@@ -338,7 +338,7 @@ return [
             'text'  => 'settings',
             'url'   => '#',
             'icon'  => 'fa fa-fw fa-cog',
-            'can'   => ['user access', 'role access', 'company access', 'position access', 'system logs', 'system settings'],
+            'can'   => ['system settings'],
             'submenu' => [
                 [
                     'text'      => 'org_structures',

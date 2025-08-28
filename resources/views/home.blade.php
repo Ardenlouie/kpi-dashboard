@@ -15,9 +15,15 @@
 
 @stop
 @push('css')
-    {{-- Add here extra stylesheets --}}
-    {{-- <link rel="stylesheet" href="/css/admin_custom.css"> --}}
+<style>
+    .mobile-only { display: none; }
+    .desktop-only { display: inline; }
 
+    @media (max-width: 768px) {
+        .mobile-only { display: inline; }
+        .desktop-only { display: none; }
+    }
+</style>
 @endpush
 @push('js')
 
