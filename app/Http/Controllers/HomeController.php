@@ -30,6 +30,47 @@ class HomeController extends Controller
         return view('home', );
     }
 
+    public function accountData($month, $year)
+    {
+        $sales_api = Http::withToken('UaHxtws9LHZ47QG21lBXjQgka3Fe93H5xV1Y6HBQDN4=')->get('http://192.168.11.240/refreshable/public/api/arTrn_bevi/'.$year.'/'.$month.'/'.$month);
+
+        $sales_bevi_collect = collect($sales_api->json());
+
+        $account = $sales_bevi_collect
+            ->groupBy('ShortName')
+            ->map(fn($items) => $items->sum('Actual Amount'))
+            ->sortDesc()->take(10);
+
+        $total = number_format($account->sum(), 2, '.', ',');
+
+        return response()->json([
+            'labels' => $account->keys(),
+            'values' => $account->values(),
+            'total'  => $total, 
+        ]);
+    }
+
+    public function brandData($month, $year, $account)
+    {
+        $sales_api = Http::withToken('UaHxtws9LHZ47QG21lBXjQgka3Fe93H5xV1Y6HBQDN4=')->get('http://192.168.11.240/refreshable/public/api/arTrn_bevi/'.$year.'/'.$month.'/'.$month);
+
+        $sales_bevi_collect = collect($sales_api->json());
+
+        $brand = $sales_bevi_collect
+            ->where('ShortName', $account)
+            ->groupBy('Brand')
+            ->map(fn($items) => $items->sum('Actual Amount'))
+            ->sortDesc()->take(7);
+
+        $total = number_format($brand->sum(), 2, '.', ',');
+
+        return response()->json([
+            'labels' => $brand->keys(),
+            'values' => $brand->values(),
+            'total'  => $total, 
+        ]);
+    }
+
     public function fetchData()
     {
         $short = function($num) {

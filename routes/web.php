@@ -43,6 +43,8 @@ Route::group(['middleware' => ['auth', 'optimizeImages']], function() {
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/fetch-data', [App\Http\Controllers\HomeController::class, 'fetchData'])->name('fetchData');
+    Route::get('/account-data/{month}/{year}', [App\Http\Controllers\HomeController::class, 'accountData'])->name('accountData');
+    Route::get('/brand-data/{month}/{year}/{account}', [App\Http\Controllers\HomeController::class, 'brandData'])->name('brandData');
 
     // PROFILE
     Route::get('profile/{id}', [UserController::class, 'profile'])->name('profile');
