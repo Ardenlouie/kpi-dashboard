@@ -28,9 +28,9 @@
                         </button>
                     </div>
                 </div>
-                <div class="card-body" style="display: none;">
+                <div class="card-body table-responsive" style="display: none;">
                     <h5 class="text-bold text-center">Top Brands Category</h5>
-                    <table class="table table-bordered">
+                    <table class="table table-striped">
                         <tbody>
                         @foreach ($beviBrandTotals as $brand => $total)
                             <tr>
@@ -72,9 +72,9 @@
                         </button>
                     </div>
                 </div>
-                <div class="card-body" style="display: none;">
+                <div class="card-body table-responsive" style="display: none;">
                     <h5 class="text-bold text-center">Top Brands Category</h5>
-                    <table class="table table-bordered">
+                    <table class="table table-striped ">
                         <tbody>
                         @foreach ($bevaBrandTotals as $brand => $total)
                             <tr>
@@ -117,9 +117,9 @@
                         </button>
                     </div>
                 </div>
-                <div class="card-body" style="display: none;">
+                <div class="card-body table-responsive" style="display: none;">
                     <h5 class="text-bold text-center">Top Brands Category</h5>
-                    <table class="table table-bordered">
+                    <table class="table table-striped">
                         <tbody>
                         @foreach ($bigiBrandTotals as $brand => $total)
                             <tr>
@@ -161,9 +161,9 @@
                         </button>
                     </div>
                 </div>
-                <div class="card-body" style="display: none;">
+                <div class="card-body table-responsive" style="display: none;">
                     <h5 class="text-bold text-center">Top Brands Category</h5>
-                    <table class="table table-bordered">
+                    <table class="table table-striped">
                         <tbody>
                         @foreach ($allBrandTotals as $brand => $total)
                             <tr>
@@ -442,76 +442,122 @@
         const dataPoints1 = @json($dataPoints1);
         const dataPoints2 = @json($dataPoints2);
         const dataPoints3 = @json($dataPoints3);
-        // Data for the chart
-        const data = {
-            labels  : dataPoints3,
-            datasets: [
-                {
-                     type: 'bar',
-                    label: '2024', // Dataset label
-                    data: dataPoints1, // Data points
-                    backgroundColor: [
-                        'rgba(147, 147, 147, 1)'
-                    ],
-                    borderColor: [
-                        'rgba(98, 98, 98, 1)'
+        let chartMode = 'monthly';
 
-                    ],
-                    borderWidth: 1 // Border width
-                    
+        const barChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: @json($dataPoints3),
+                datasets: [
+                    {
+                        type: 'bar',
+                        label: '2024', // Dataset label
+                        data: dataPoints1, // Data points
+                        backgroundColor: [
+                            'rgba(147, 147, 147, 1)'
+                        ],
+                        borderColor: [
+                            'rgba(98, 98, 98, 1)'
+
+                        ],
+                        borderWidth: 1, // Border width
+                        years: '2024',
+                        
+                    },
+                    {
+                        type: 'bar',
+                        label: '2025', // Dataset label
+                        data: dataPoints2, // Data points
+                        backgroundColor: [
+                            'rgba(125, 0, 214, 1)'
+
+                        ],
+                        borderColor: [
+                            'rgba(124, 0, 212, 1)'
+
+                        ],
+                        borderWidth: 1, 
+                        years: '2025',
+            
+                        
+                    },
+                ]
+            },
+            options: {
+                responsive: true,
+                onClick: function(evt, elements) {               
+                    if (elements.length === 0) return;
+
+                    let index = elements[0].index;
+                    let datasetIndex = elements[0].datasetIndex;
+
+                    if (chartMode === 'monthly') {
+                        let monthIndex = elements[0].index;
+                        let datasetIndex = elements[0].datasetIndex;
+                        let monthName = this.data.labels[monthIndex];
+                        let year = this.data.datasets[datasetIndex].label;
+                        let month = new Date(Date.parse(monthName +" 1, 2025")).getMonth() + 1;
+                        selectedYear = year;
+                        selectedMonth = month;
+                        
+                        fetch(`/account-data/${month}/${year}`)
+                            .then(res => res.json())
+                            .then(data => {
+                                barChart.data.labels = data.labels;
+                                barChart.data.datasets = [{
+                                    label: `Account Sales (${monthName} ${year})`,
+                                    data: data.values,
+                                    backgroundColor: 'rgb(255, 165, 0)',
+                                    borderColor: 'rgb(255, 165, 0)',
+                                    borderWidth: 1,
+                                }];
+                                barChart.data.datasets.splice(1, 1)
+                                
+                                barChart.update();
+
+                                chartMode = 'daily';
+                            });
+                    } else if (chartMode === 'daily') {
+                        // Step 2 → Clicked on a Day
+                        let account = this.data.labels[index]; 
+
+                        fetch(`/brand-data/${selectedMonth}/${selectedYear}/${account}`)
+                            .then(res => res.json())
+                            .then(data => {
+                                barChart.data.labels = data.labels;
+                                barChart.data.datasets = [{
+                                    label: `Brands (${selectedMonth}/${selectedYear} - ${account})`,
+                                    data: data.values,
+                                    backgroundColor: 'rgba(0, 200, 255, 0.6)',
+                                    borderColor: 'rgba(0, 200, 255, 0.6)',
+                                    borderWidth: 1
+                                }];
+                                barChart.update();
+                                chartMode = 'detail';
+                            });
+                    } 
                 },
-                
-                {
-                    type: 'bar',
-                    label: '2025', // Dataset label
-                    data: dataPoints2, // Data points
-                    backgroundColor: [
-                        'rgba(125, 0, 214, 1)'
-                    ],
-                    borderColor: [
-                        'rgba(124, 0, 212, 1)'
-                    ],
-                    borderWidth: 1 // Border width
-          
-                    
-                },
-
-                
-            ]
-        
-        };
-
-        // Configuration options
-        const options = {
-            responsive: true, // Chart resizes with container
-            maintainAspectRatio: false, // Allow custom height/width
-            scales: {
+                scales: {
                 y: {
                     beginAtZero: true, 
                     display: false
                 }
-            },
-            
-            plugins: {
-                legend: {
-                    display: true, // Show legend
-                    position: 'top'
+                },
+                
+                plugins: {
+                    legend: {
+                        display: true, // Show legend
+                        position: 'top'
+                    }
+                },
+                plugins: {
+                    chartAreaBackground: {
+                        color: 'rgb(37, 5, 5)', // Chart background color
+                    }
                 }
-            },
-            plugins: {
-                  chartAreaBackground: {
-                    color: 'rgb(37, 5, 5)', // Chart background color
-                  }
-              }
-          };
+                }
+            });
 
-        // Create the bar chart
-        new Chart(ctx, {
-
-            data: data,
-            options: options
-            
-        });
 
     const ctxDonut = document.getElementById('salesDonutChart').getContext('2d');
 
@@ -604,10 +650,9 @@
                     borderColor: '#3c8dbc',
                     backgroundColor: 'rgba(0,123,255,0.1)',
                     fill: true,
-                    tension: 0.4,
-                    pointRadius: 4,
-                    pointBackgroundColor: '#3c8dbc',
-                    pointHoverRadius: 6
+                    pointRadius: 8,
+                    pointBackgroundColor: 'rgba(52, 136, 225, 0.5)',
+                    pointHoverRadius: 10
                 }]
             },
             options: {
@@ -651,10 +696,9 @@
                     borderColor: '#00c0ef',
                     backgroundColor: 'rgba(0,123,255,0.1)',
                     fill: true,
-                    tension: 0.4,
-                    pointRadius: 4,
-                    pointBackgroundColor: '#00c0ef',
-                    pointHoverRadius: 6
+                    pointRadius: 8,
+                    pointBackgroundColor: 'rgba(5, 202, 247, 0.5)',
+                    pointHoverRadius: 10
                 }]
             },
             options: {
@@ -698,10 +742,9 @@
                     borderColor: '#d2d6de',
                     backgroundColor: 'rgba(0,123,255,0.1)',
                     fill: true,
-                    tension: 0.4,
-                    pointRadius: 4,
-                    pointBackgroundColor: '#d2d6de',
-                    pointHoverRadius: 6
+                    pointRadius: 8,
+                    pointBackgroundColor: 'rgba(191, 191, 191, 0.5)',
+                    pointHoverRadius: 10
                 }]
             },
             options: {
