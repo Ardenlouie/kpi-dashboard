@@ -15,7 +15,8 @@ class Dashboard extends Component
     $total_beva_py=0, $total_bigi_py=0, $emg_bevi=0, $emg_beva=0, $emg_bigi=0, $nkag_bevi=0, $inhouse_bevi=0, $rdg_beva=0, $tradeworld=0,
     $inhouse_beva=0, $ptuiccp=0, $ecomm=0, $export=0, $nkag_bevi_py=0, $inhouse_bevi_py=0, $rdg_beva_py=0, $tradeworld_py=0,
     $inhouse_beva_py=0, $ptuiccp_py=0, $ecomm_py=0, $export_py=0, $emg_nkag_bevi=0, $emg_inhouse_bevi=0, $emg_rdg_beva=0, $emg_tradeworld=0,
-    $emg_inhouse_beva=0, $emg_ptuiccp=0, $emg_ecomm=0, $emg_export=0, $nka_total_budget=0, $rdg_total_budget=0, $emp_nkag=0, $emp_rdg=0, $beviBrandTotals=[];
+    $emg_inhouse_beva=0, $emg_ptuiccp=0, $emg_ecomm=0, $emg_export=0, $nka_total_budget=0, $rdg_total_budget=0, $emp_nkag=0, $emp_rdg=0, $beviBrandTotals=[]
+    ,$allTotal=0, $allTotal_py=0, $newBrandTotals=[], $businessTotals=[], $accountTotals=[];
 
     public function updatedYear($year)
     {
@@ -31,7 +32,8 @@ class Dashboard extends Component
     {
         $this->reset('total_bevi', 'total_beva', 'total_bigi', 'total_bevi_py', 'total_beva_py', 'total_bigi_py', 'emg_bevi', 'emg_beva', 'emg_bigi', 'nkag_bevi',
      'inhouse_bevi', 'rdg_beva', 'tradeworld', 'inhouse_beva', 'ptuiccp', 'ecomm', 'export', 'nkag_bevi_py',
-     'inhouse_bevi_py', 'rdg_beva_py', 'tradeworld_py', 'inhouse_beva_py', 'ptuiccp_py', 'ecomm_py', 'export_py');
+     'inhouse_bevi_py', 'rdg_beva_py', 'tradeworld_py', 'inhouse_beva_py', 'ptuiccp_py', 'ecomm_py', 'export_py',
+        'allTotal', 'allTotal_py');
 
         $prev_year = $this->year - 1;
 
@@ -44,7 +46,34 @@ class Dashboard extends Component
         $this->nka_total_budget = $nka_budgets->sum('amount');
         $this->rdg_total_budget = $rdg_budgets->sum('amount');
 
+        $this->allTotal = $sales_bevi_collect
+            ->sum('Actual Amount');
+
+        $this->allTotal_py = $sales_bevi_collect
+            ->sum('Previous Amount');
+
         $this->beviBrandTotals = $sales_bevi_collect
+            ->groupBy('Brand')
+            ->map(function ($items) {
+                return $items->sum('Actual Amount');
+            })->sortDesc();
+
+        $this->businessTotals = $sales_bevi_collect
+            ->groupBy('BusinessUnit')
+            ->map(function ($items) {
+                return $items->sum('Actual Amount');
+            })->sortDesc();
+
+        $this->accountTotals = $sales_bevi_collect
+            ->groupBy('ShortName')
+            ->map(function ($items) {
+                return $items->sum('Actual Amount');
+            })->sortDesc();
+
+        $newBrands = ['KOJIESAN + BATH', 'KOJIESAN + BODY', 'DEFENSIL ANTIBACTERIAL'];
+
+        $this->newBrandTotals = $sales_bevi_collect
+            ->whereIn('Brand', $newBrands)
             ->groupBy('Brand')
             ->map(function ($items) {
                 return $items->sum('Actual Amount');

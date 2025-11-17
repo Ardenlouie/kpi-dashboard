@@ -64,7 +64,7 @@ return [
     */
 
     'logo' => 'KPI Dashboard',
-    'logo_img' => 'images/kpi-mini.png',
+    'logo_img' => 'images/kpi-mini2.png',
     'logo_img_login' => 'images/kpidashboardlogo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
@@ -111,12 +111,12 @@ return [
     */
 
     'preloader' => [
-        'enabled' => true,
+        'enabled' => false,
         'mode' => 'fullscreen',
         'img' => [
             'path' => 'images/kojiesan.png',
             'alt' => 'AdminLTE Preloader Image',
-            'effect' => 'animation__wobble',
+            'effect' => false,
             'width' => 300,
             'height' => 300,
             'black' => 300,
@@ -137,7 +137,7 @@ return [
 
     'usermenu_enabled' => true,
     'usermenu_header' => true,
-    'usermenu_header_class' => 'bg-purple',
+    'usermenu_header_class' => 'bg-red',
     'usermenu_image' => true,
     'usermenu_desc' => true,
     'usermenu_profile_url' => true,
@@ -173,9 +173,9 @@ return [
     |
     */
 
-    'classes_auth_card' => 'bg-gradient-purple',
+    'classes_auth_card' => 'bg-gradient-red',
     'classes_auth_header' => '',
-    'classes_auth_body' => 'bg-gradient-purple',
+    'classes_auth_body' => 'bg-gradient-red',
     'classes_auth_footer' => 'text-center',
     'classes_auth_icon' => 'fa-fw text-light',
     'classes_auth_btn' => 'btn-flat btn-light',
@@ -200,7 +200,7 @@ return [
     'classes_content' => '',
     'classes_sidebar' => 'sidebar-dark-primary elevation-4',
     'classes_sidebar_nav' => '',
-    'classes_topnav' => 'navbar-dark navbar-purple',
+    'classes_topnav' => 'navbar-dark navbar-red',
     'classes_topnav_nav' => 'navbar-expand',
     'classes_topnav_container' => 'container',
 

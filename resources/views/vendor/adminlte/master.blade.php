@@ -4,7 +4,7 @@
 <head>
 <style>
   .preloader {
-      background: linear-gradient(180deg, #6e2d97ff, #9938dfff, #ffffffff) !important;
+      background: linear-gradient(180deg, #972d2dff, #df3838ff, #000000ff) !important;
       background-size: 400% 400%;
       animation: gradientShift 10s ease infinite;
   }
@@ -22,7 +22,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description" content="Larvel 10 Startup project">
     <meta name="author" content="JM">
-    <link rel="shortcut icon" href="{{ asset('images/kpi-mini-nobg.png')}}" />
+    <link rel="shortcut icon" href="{{ asset('images/kpi-mini-nobg2.png')}}" />
 
     {{-- Custom Meta Tags --}}
     @yield('meta_tags')
@@ -82,9 +82,9 @@
 
     {{-- Favicon --}}
     @if(config('adminlte.use_ico_only'))
-        <link rel="shortcut icon" href="{{ asset('favicons/favicon.ico') }}" />
+        <link rel="shortcut icon" href="{{ asset('images/kpi-mini-nobg2.png') }}" />
     @elseif(config('adminlte.use_full_favicon'))
-        <link rel="shortcut icon" href="{{ asset('favicons/favicon.ico') }}" />
+        <link rel="shortcut icon" href="{{ asset('images/kpi-mini-nobg2.png') }}" />
         <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('favicons/apple-icon-57x57.png') }}">
         <link rel="apple-touch-icon" sizes="60x60" href="{{ asset('favicons/apple-icon-60x60.png') }}">
         <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('favicons/apple-icon-72x72.png') }}">
