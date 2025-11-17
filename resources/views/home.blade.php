@@ -23,6 +23,19 @@
         .mobile-only { display: inline; }
         .desktop-only { display: none; }
     }
+
+    #container {
+    height: 800px;
+    min-width: 500px;
+    max-width: 1000px;
+    margin: 0 auto;
+    }
+
+    .loading {
+        margin-top: 10em;
+        text-align: center;
+        color: gray;
+    }
 </style>
 @endpush
 @push('js')
@@ -30,6 +43,10 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-sparklines/2.1.2/jquery.sparkline.min.js"></script>
+<script src="https://code.highcharts.com/maps/highmaps.js"></script>
+<script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
+<!-- <script src="{{ asset('vendor/node_modules/chart.js/dist/chart.js') }}"></script>
+<script src="{{ asset('vendor/node_modules/chart.js/dist/chart.js.map') }}"></script> -->
 
 <script>
     function fetchDataAndUpdate() {
@@ -48,7 +65,7 @@
             
             fetchDataAndUpdate();
 
-            setInterval(fetchDataAndUpdate, 60000);
+            setInterval(fetchDataAndUpdate, 6000000);
         }, 1);
     });
 </script>

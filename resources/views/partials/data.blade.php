@@ -2,7 +2,7 @@
 <div class="card-body">
     <div class="row">
         <div class="col-lg-3 col-6">
-            <div class="card small-box bg-purple ">
+            <div class="card small-box bg-red">
                 <div class="card-header">
                     <div class="inner">
                         <h3><p>BEVI</p></h3>
@@ -15,7 +15,7 @@
                         @if($percent_bevi >= 0)
                             <h4 class="description-percentage text-success text-center"><i class="fas fa-caret-up"></i>{{number_format($percent_bevi, 1)}}%</h4>
                         @elseif($percent_bevi < 0)
-                            <h4 class="description-percentage text-danger text-center"><i class="fas fa-caret-down"></i> {{number_format($percent_bevi, 1)}}%</h4>
+                            <h4 class="description-percentage text-white text-center"><i class="fas fa-caret-down"></i> {{number_format($percent_bevi, 1)}}%</h4>
                         @else
                         @endif
                     </div>
@@ -184,18 +184,61 @@
             <div class="card">
                 <div class="card-header">
                     <h5 class="card-title">Monthly Recap Report</h5>
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                            <i class="fas fa-minus"></i>
-                        </button>
-                    </div>
+                    <!-- <div class="card-tools">
+                        <ul class="nav nav-pills ml-auto">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#bevi-chart" data-toggle="tab">BEVI</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#beva-chart" data-toggle="tab">BEVA</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#bigi-chart" data-toggle="tab">BIG I</a>
+                            </li>
+                        </ul>
+                    </div> -->
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-8">
-                            <p class="text-center"><strong>Sales: {{$datetoday}}</strong></p>
+                            <p class="text-center"><strong>Sales as of: {{$datetoday}}</strong></p>
+                            
                             <div class="chart">
+                                <button id="backBtn" style="display:none; margin-bottom:10px;">⬅ Back</button>
+                                <!-- <div id="companyBtn" class="card-tools float-right" style="display:none;">
+                                    <ul class="nav nav-pills ml-auto">
+                                        <li class="nav-item">
+                                            <div class="form-group">
+                                                <div>
+                                                    <label><input type="checkbox" class="company-filter" value="BEVI" checked> BEVI</label>
+                                                    <label><input type="checkbox" class="company-filter" value="BEVA" checked> BEVA</label>
+                                                    <label><input type="checkbox" class="company-filter" value="BIGI" checked>  <label class="btn btn-secondary">
+                                        <input type="radio" name="options" id="option_a3" autocomplete="off"> BEVA
+                                    </label></label>
+                                                </div>
+                                            </div>
+                                        </li>
+                                  
+                                    </ul>
+                                </div> -->
+
+                                <div id="companyBtn" class="btn-group btn-group-toggle float-right" data-toggle="buttons" style="display:none;">
+                                    <label class="btn btn-primary active">
+                                        <input id="allBtn" type="radio" name="options" id="option_a1" autocomplete="off" checked=""> All
+                                    </label>
+                                    <label class="btn btn-primary">
+                                        <input id="beviBtn" type="radio" name="options" id="option_a2" autocomplete="off"> BEVI
+                                    </label>
+                                    <label class="btn btn-primary">
+                                        <input id="bevaBtn" type="radio" name="options" id="option_a3" autocomplete="off"> BEVA
+                                    </label>
+                                     <label class="btn btn-primary">
+                                        <input id="bigiBtn" type="radio" name="options" id="option_a4" autocomplete="off"> BIG I
+                                    </label>
+                                </div>
+
                                 <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -209,12 +252,14 @@
                                 : 0;
 
                                 $color = 'bg-danger'; // default red
-                                if ($percentBrand >= 75) $color = 'bg-purple';
-                                elseif ($percentBrand >= 50) $color = 'bg-info';
+                                if ($percentBrand >= 75) $color = 'bg-red';
+                                elseif ($percentBrand >= 50) $color = 'bg-secondary';
                                 elseif ($percentBrand >= 25) $color = 'bg-warning';
                                 
                             @endphp
                             <div class="progress-group">
+                                <img src="{{asset('/images/'.$brand.'1.png')}}" alt="Product 1" class="img-square img-size-50 mr-2">
+
                                 {{$brand}}
                                 <span class="float-right"><b>{{$short($total['actual'], 2, '.', ',')}}</b>/{{$short($total['previous'], 2, '.', ',')}}</span>
                                 <div class="progress progress-xl">
@@ -364,7 +409,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-5">
             <div class="card" style="position: relative; left: 0px; top: 0px;">
                 <div class="card-header">
                     <h3 class="card-title">
@@ -385,24 +430,26 @@
                         </ul>
                     </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body" style="max-height: 500px; overflow: auto;">
                     <div class="tab-content p-0">
-                        <div class="chart tab-pane active" id="bevi-chart" style="position: relative; height: 300px;"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-                            <canvas id="lineChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;" class="chartjs-render-monitor"></canvas>
+                        <div class="chart tab-pane active" id="bevi-chart" style="position: relative; height: 1000px;">
+                            <canvas id="lineChart" style="min-height: 980px; height: 980px; max-height: 980px; max-width: 100%;" class="chartjs-render-monitor"></canvas>
                         </div>
-                        <div class="chart tab-pane" id="beva-chart" style="position: relative; height: 300px;"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-                            <canvas id="lineChart2" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;" class="chartjs-render-monitor"></canvas>
+                        <div class="chart tab-pane" id="beva-chart" style="position: relative; height: 1000px;">
+                            <canvas id="lineChart2" style="min-height: 980px; height: 980px; max-height: 980px; max-width: 100%;" class="chartjs-render-monitor"></canvas>
                         </div>
-                        <div class="chart tab-pane" id="bigi-chart" style="position: relative; height: 300px;"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-                            <canvas id="lineChart3" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;" class="chartjs-render-monitor"></canvas>
+                        <div class="chart tab-pane" id="bigi-chart" style="position: relative; height: 1000px;">
+                            <canvas id="lineChart3" style="min-height: 980px; height: 980px; max-height: 980px; max-width: 100%;" class="chartjs-render-monitor"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="card">
-                <div class="card-header">
+                <div id="container"></div>
+
+                <!-- <div class="card-header">
                     <h3 class="card-title">Recently Added Brands </h3>
                 </div>
                 <div class="card-body table-responsive p-0">
@@ -427,11 +474,12 @@
                         @endforeach
                         </tbody>
                     </table>
-                </div>
+                </div> -->
 
             </div>
            
         </div>
+        
     </div>
 </div>
 
@@ -457,7 +505,7 @@
                             'rgba(147, 147, 147, 1)'
                         ],
                         borderColor: [
-                            'rgba(98, 98, 98, 1)'
+                            'rgba(180, 180, 180, 1)'
 
                         ],
                         borderWidth: 1, // Border width
@@ -469,11 +517,11 @@
                         label: '2025', // Dataset label
                         data: dataPoints2, // Data points
                         backgroundColor: [
-                            'rgba(125, 0, 214, 1)'
+                            'rgba(190, 0, 0, 1)'
 
                         ],
                         borderColor: [
-                            'rgba(124, 0, 212, 1)'
+                            'rgba(255, 0, 0, 1)'
 
                         ],
                         borderWidth: 1, 
@@ -499,8 +547,14 @@
                         let month = new Date(Date.parse(monthName +" 1, 2025")).getMonth() + 1;
                         selectedYear = year;
                         selectedMonth = month;
+                        selectedMonthName = monthName;
+                        let selected = [...document.querySelectorAll('.company-filter:checked')]
+                            .map(cb => cb.value);
+
+                        let query = selected.map(c => '' + encodeURIComponent(c)).join(',');
+                        all = ['BEVI','BEVA','BIG I'];
                         
-                        fetch(`/account-data/${month}/${year}`)
+                        fetch(`/account-data/${month}/${year}/${all}`)
                             .then(res => res.json())
                             .then(data => {
                                 barChart.data.labels = data.labels;
@@ -516,6 +570,10 @@
                                 barChart.update();
 
                                 chartMode = 'daily';
+                                document.getElementById('backBtn').style.display = 'inline-block';
+                                document.getElementById('companyBtn').style.display = 'inline-block';
+
+                             
                             });
                     } else if (chartMode === 'daily') {
                         // Step 2 → Clicked on a Day
@@ -526,7 +584,7 @@
                             .then(data => {
                                 barChart.data.labels = data.labels;
                                 barChart.data.datasets = [{
-                                    label: `Brands (${selectedMonth}/${selectedYear} - ${account})`,
+                                    label: `Brands (${selectedMonthName} ${selectedYear} - ${account})`,
                                     data: data.values,
                                     backgroundColor: 'rgba(0, 200, 255, 0.6)',
                                     borderColor: 'rgba(0, 200, 255, 0.6)',
@@ -534,14 +592,16 @@
                                 }];
                                 barChart.update();
                                 chartMode = 'detail';
+                                document.getElementById('companyBtn').style.display = 'none';
+
                             });
                     } 
                 },
                 scales: {
-                y: {
-                    beginAtZero: true, 
-                    display: false
-                }
+                    y: {
+                        beginAtZero: true, 
+                        display: false
+                    }
                 },
                 
                 plugins: {
@@ -559,6 +619,137 @@
             });
 
 
+            document.getElementById('beviBtn').addEventListener('click', function() {
+                fetch(`/account-data/${selectedMonth}/${selectedYear}/BEVI`)
+                    .then(res => res.json())
+                    .then(data => {
+                        barChart.data.labels = data.labels;
+                        barChart.data.datasets = [{
+                            label: `Account Sales (${selectedMonthName} ${selectedYear})`,
+                            data: data.values,
+                            backgroundColor: 'rgba(255, 165, 0)',
+                            borderColor: 'rgba(255, 165, 0)',
+                            borderWidth: 1
+                        }];
+                        barChart.update();
+                    });
+            });
+
+            document.getElementById('bevaBtn').addEventListener('click', function() {
+                fetch(`/account-data/${selectedMonth}/${selectedYear}/BEVA`)
+                    .then(res => res.json())
+                    .then(data => {
+                        barChart.data.labels = data.labels;
+                        barChart.data.datasets = [{
+                            label: `Account Sales (${selectedMonthName} ${selectedYear})`,
+                            data: data.values,
+                            backgroundColor: 'rgba(255, 165, 0)',
+                            borderColor: 'rgba(255, 165, 0)',
+                            borderWidth: 1
+                        }];
+                        barChart.update();
+                    });
+            });
+
+            document.getElementById('bigiBtn').addEventListener('click', function() {
+                fetch(`/account-data/${selectedMonth}/${selectedYear}/BIG I`)
+                    .then(res => res.json())
+                    .then(data => {
+                        barChart.data.labels = data.labels;
+                        barChart.data.datasets = [{
+                            label: `Account Sales (${selectedMonthName} ${selectedYear})`,
+                            data: data.values,
+                            backgroundColor: 'rgba(255, 165, 0)',
+                            borderColor: 'rgba(255, 165, 0)',
+                            borderWidth: 1
+                        }];
+                        barChart.update();
+                    });
+            });
+
+            document.getElementById('allBtn').addEventListener('click', function() {
+                fetch(`/account-data/${selectedMonth}/${selectedYear}/${all}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        barChart.data.labels = data.labels;
+                        barChart.data.datasets = [{
+                            label: `Account Sales (${selectedMonthName} ${selectedYear})`,
+                            data: data.values,
+                            backgroundColor: 'rgba(255, 165, 0)',
+                            borderColor: 'rgba(255, 165, 0)',
+                            borderWidth: 1
+                        }];
+                        barChart.update();
+                    });
+            });
+
+            document.getElementById('backBtn').addEventListener('click', function() {
+            if (chartMode === 'detail') {
+                // Go back to daily
+                fetch(`/account-data/${selectedMonth}/${selectedYear}/${all}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        barChart.data.labels = data.labels;
+                        barChart.data.datasets = [{
+                            label: `Account Sales (${selectedMonthName} ${selectedYear})`,
+                            data: data.values,
+                            backgroundColor: 'rgba(255, 165, 0)',
+                            borderColor: 'rgba(255, 165, 0)',
+                            borderWidth: 1
+                        }];
+                        barChart.update();
+                        chartMode = 'daily';
+                    });
+
+                document.getElementById('companyBtn').style.display = 'inline-block';
+                document.getElementById('allBtn').checked;
+
+            } else if (chartMode === 'daily') {
+                // Go back to monthly
+                barChart.data.labels = @json($dataPoints3);
+                barChart.data.datasets = [
+                    {
+                        type: 'bar',
+                        label: '2024', // Dataset label
+                        data: dataPoints1, // Data points
+                        backgroundColor: [
+                            'rgba(147, 147, 147, 1)'
+                        ],
+                        borderColor: [
+                            'rgba(180, 180, 180, 1)'
+
+                        ],
+                        borderWidth: 1, // Border width
+                        years: '2024',
+                        
+                    },
+                    {
+                        type: 'bar',
+                        label: '2025', // Dataset label
+                        data: dataPoints2, // Data points
+                        backgroundColor: [
+                            'rgba(190, 0, 0, 1)'
+
+                        ],
+                        borderColor: [
+                            'rgba(255, 0, 0, 1)'
+
+                        ],
+                        borderWidth: 1, 
+                        years: '2025',
+            
+                        
+                    },
+                ];
+                barChart.update();
+                chartMode = 'monthly';
+                this.style.display = 'none';
+                document.getElementById('companyBtn').style.display = 'none';
+
+            }
+        });
+
+
     const ctxDonut = document.getElementById('salesDonutChart').getContext('2d');
 
     new Chart(ctxDonut, {
@@ -568,7 +759,7 @@
             datasets: [{
                 data: {!! json_encode($companyTotal) !!}, 
                 backgroundColor: [
-                     '#00c0ef', '#3c8dbc', '#d2d6de'
+                    '#bb0000ff', '#696969ff', '#cbba00ff'
                 ],
                 borderWidth: 1
             }]
@@ -613,7 +804,7 @@
                     type: $this.data('type') || 'line',
                     height: '30',
                     width: '200',
-                    lineColor: '#f55a00ff',
+                    lineColor: '#ffc800ff',
                     responsive: true,
                     fillColor: false
                 }
@@ -628,7 +819,7 @@
                     type: $this.data('type') || 'line',
                     height: '30',
                     width: '200',
-                    lineColor: '#9300f5ff',
+                    lineColor: '#f50000ff',
                     responsive: true,
                     fillColor: false
                     
@@ -647,40 +838,25 @@
                 datasets: [{
                     label: 'Sales',
                     data: {!! json_encode($beviTotals) !!},     // [10000, 12000, ...]
-                    borderColor: '#3c8dbc',
-                    backgroundColor: 'rgba(0,123,255,0.1)',
+                    borderColor: '#ef0000ff',
+                    backgroundColor: 'rgba(255, 0, 0, 0.1)',
                     fill: true,
                     pointRadius: 8,
-                    pointBackgroundColor: 'rgba(52, 136, 225, 0.5)',
+                    pointBackgroundColor: 'rgba(255, 0, 0, 0.5)',
                     pointHoverRadius: 10
                 }]
             },
+            
             options: {
+                indexAxis: 'y',
                 responsive: true,
                 plugins: {
                     legend: {
                         display: false,
                         position: 'top'
                     },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                return '₱' + context.parsed.y.toLocaleString();
-                            }
-                        }
-                    }
                 },
-                scales: {
-                    y: {
-                        beginAtZero: false,
-                        display: false,
-                        ticks: {
-                            callback: function(value) {
-                                return '₱' + value.toLocaleString();
-                            }
-                        }
-                    }
-                }
+             
             }
         });
 
@@ -702,31 +878,15 @@
                 }]
             },
             options: {
+                indexAxis: 'y',
                 responsive: true,
                 plugins: {
                     legend: {
                         display: false,
                         position: 'top'
                     },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                return '₱' + context.parsed.y.toLocaleString();
-                            }
-                        }
-                    }
                 },
-                scales: {
-                    y: {
-                        beginAtZero: false,
-                        display: false,
-                        ticks: {
-                            callback: function(value) {
-                                return '₱' + value.toLocaleString();
-                            }
-                        }
-                    }
-                }
+             
             }
         });
 
@@ -748,33 +908,106 @@
                 }]
             },
             options: {
+                indexAxis: 'y',
                 responsive: true,
                 plugins: {
                     legend: {
                         display: false,
                         position: 'top'
                     },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                return '₱' + context.parsed.y.toLocaleString();
-                            }
-                        }
-                    }
                 },
-                scales: {
-                    y: {
-                        beginAtZero: false,
-                        display: false,
-                        ticks: {
-                            callback: function(value) {
-                                return '₱' + value.toLocaleString();
-                            }
-                        }
-                    }
-                }
+             
             }
         });
+
+       (async () => {
+
+    const topology = await fetch(
+        'https://code.highcharts.com/mapdata/countries/ph/ph-all.topo.json'
+    ).then(response => response.json());
+
+    // Prepare demo data. The data is joined to map using value of 'hc-key'
+    // property by default. See API docs for 'joinBy' for more info on linking
+    // data and map.
+    const data = [
+        ['ph-mn', 0], ['ph-4218', 0], ['TAWI-TAWI', 0], ['ph-bo', @json($bohol)],
+        ['ph-cb', @json($ceb)], ['ph-bs', 0], ['ph-2603', 0], ['ph-su', 0],
+        ['ph-aq', 0], ['ph-pl', @json($palawan)], ['ph-ro', 0], ['ph-al', @json($albay)],
+        ['ph-cs', @json($camsur)], ['ph-6999', 0], ['ph-bn', 0], ['ph-cg', 0],
+        ['ph-pn', @json($pangas)], ['ph-bt', @json($batct)], ['ph-mc', 0], ['ph-qz', 0],
+        ['ph-es', 0], ['ph-le', @json($leyte)], ['ph-sm', 0], ['ph-ns', 0],
+        ['ph-cm', 0], ['ph-di', 0], ['ph-ds', 0], ['ph-6457', 0],
+        ['ph-6985', 0], ['ph-ii', 0], ['ph-7017', 0], ['ph-7021', 0],
+        ['ph-lg', @json($laguna)], ['ph-ri', @json($rizal)], ['ph-ln', 0], ['ph-6991', 0],
+        ['ph-ls', 0], ['ph-nc', 0], ['ph-mg', 0], ['ph-sk', 0],
+        ['ph-sc', 0], ['ph-sg', 0], ['ph-an', 0], ['ph-ss', 0],
+        ['ph-as', 0], ['ph-do', 0], ['ph-dv', 0], ['ph-bk', 0],
+        ['ph-cl', 0], ['ph-6983', 0], ['ph-6984', @json($mandaue)], ['ph-6987', @json($bacld)],
+        ['ph-6986', @json($ilo)], ['ph-6988', 0], ['ph-6989', @json($dvo)], ['ph-6990', 0],
+        ['ph-6992', @json($cdo)], ['ph-6995', 0], ['ph-6996', 0], ['ph-6997', 0],
+        ['ph-6998', 0], ['ph-nv', 0], ['ph-7020', 0], ['ph-7018', 0],
+        ['ph-7022', 0], ['ph-1852', 0], ['ph-7000', @json($mn)], ['ph-7001', 0],
+        ['ph-7002', 0], ['ph-7003', 0], ['ph-7004', 0], ['ph-7006', @json($qc)],
+        ['ph-7007', 0], ['ph-7008', @json($sanj)], ['ph-7009', @json($pasig)], ['ph-7010', @json($makati)],
+        ['ph-7011', @json($pasay)], ['ph-7012', @json($paraq)], ['ph-7013', @json($lasp)], ['ph-7014', @json($munlupa)],
+        ['ph-7015', @json($taguig)], ['ph-7016', 0], ['ph-7019', @json($lucn)], ['ph-6456', @json($zambg)],
+        ['ph-zs', 0], ['ph-nd', 0], ['ph-zn', 0], ['ph-md', 0],
+        ['ph-ab', 0], ['ph-2658', 0], ['ph-ap', 0], ['ph-au', 0],
+        ['ph-ib', @json($isabela)], ['ph-if', 0], ['ph-mt', 0], ['ph-qr', 0],
+        ['ph-ne', 0], ['ph-pm', @json($pampanga)], ['ph-ba', 0], ['ph-bg', 0],
+        ['ph-zm', 0], ['ph-cv', @json($cavite)], ['ph-bu', 0], ['ph-mr', 0],
+        ['ph-sq', 0], ['ph-gu', 0], ['ph-ct', 0], ['ph-mb', 0],
+        ['ph-mq', 0], ['ph-bi', 0], ['ph-sl', 0], ['ph-nr', 0],
+        ['ph-ak', 0], ['ph-cp', 0], ['ph-cn', 0], ['ph-sr', 0],
+        ['ph-in', @json($ilonor)], ['ph-is', 0], ['ph-tr', @json($tarlac)], ['ph-lu', 0]
+    ];
+
+    // Create the chart
+    Highcharts.mapChart('container', {
+        chart: {
+            map: topology
+        },
+
+        title: {
+            text: 'Sales Map Chart (Local)'
+        },
+
+        subtitle: {
+            text: 'Source map: <a href="https://code.highcharts.com/mapdata/countries/ph/ph-all.topo.json">Philippines</a>'
+        },
+
+        mapNavigation: {
+            enabled: true,
+            buttonOptions: {
+                verticalAlign: 'bottom'
+            }
+        },
+
+        colorAxis: {
+            min: 0,
+            stops: [
+                [0, '#FFFFCC'], // low values → light yellow
+                [0.5, '#FD8D3C'], // mid values → orange
+                [1, '#800026']  // high values → dark red
+            ]
+        },
+
+        series: [{
+            data: data,
+            name: 'Sales',
+            states: {
+                hover: {
+                    color: '#BADA55'
+                }
+            },
+            dataLabels: {
+                enabled: false,
+                format: '{point.name}'
+            }
+        }]
+    });
+
+})();
         
     };
 </script>

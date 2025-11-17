@@ -7,7 +7,7 @@
             height: 100%;
             margin: auto;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: url('/images/kpidashboardlogo.png') no-repeat center center fixed;
+            background: url('/images/kpidashboardlogo7.png') no-repeat center center fixed;
             background-size: cover;
         }
 
@@ -21,17 +21,18 @@
 
         .login-container {
             position: relative;
-            z-index: 1;
+            right: 200px;
             height: 100%;
             display: flex;
-            justify-content: center;
+            justify-content: right;
             align-items: center;
+            opacity: 1;
         }
 
         .login-card {
             display: flex;
-            width: 800px;
-            max-width: 95%;
+            width: 600px;
+            max-width: 100%;
             background: rgba(255, 255, 255, 0.95);
             border-radius: 10px;
             overflow: hidden;
@@ -40,12 +41,12 @@
 
         .login-image {
             width: 50%;
-            background: url('/images/kpidashboardlogo3.png') no-repeat center center;
+            background: url('/images/kojiesan.png') no-repeat center center;
             background-size: cover;
         }
 
         .login-form {
-            width: 50%;
+            width: 100%;
             padding: 40px;
         }
 
@@ -100,10 +101,11 @@
     <div class="overlay"></div>
     <div class="login-container">
         <div class="login-card">
-            <div class="login-image"></div>
+
             <div class="login-form">
-                <img src="{{asset('images/kpi-logo-nobg2.png')}}" alt="product photo" class="product-img" height="100" width="300">
-                <h2>Login</h2>
+                <img src="{{asset('images/kpi-logo2.png')}}" alt="product photo" class="product-img" height="150" width="500">
+                <p></p>
+                <!-- <h2>Login</h2> -->
                 <form action="{{ $login_url }}" method="post">
 
                     @csrf

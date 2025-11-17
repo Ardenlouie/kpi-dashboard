@@ -30,16 +30,20 @@ class HomeController extends Controller
         return view('home', );
     }
 
-    public function accountData($month, $year)
+    public function accountData($month, $year, $company)
     {
         $sales_api = Http::withToken('UaHxtws9LHZ47QG21lBXjQgka3Fe93H5xV1Y6HBQDN4=')->get('http://192.168.11.240/refreshable/public/api/arTrn_bevi/'.$year.'/'.$month.'/'.$month);
 
         $sales_bevi_collect = collect($sales_api->json());
 
+        $companies = explode(',', $company);
+
+
         $account = $sales_bevi_collect
+            ->whereIn('Company', $companies)
             ->groupBy('ShortName')
             ->map(fn($items) => $items->sum('Actual Amount'))
-            ->sortDesc()->take(10);
+            ->sortDesc()->take(12);
 
         $total = number_format($account->sum(), 2, '.', ',');
 
@@ -134,40 +138,43 @@ class HomeController extends Controller
             ->groupBy('TrnMonth')
             ->map(function ($items) {
                 return $items->sum('Actual Amount');
-            });
+            })->sortKeys();
 
         $companyTotals = $sales_bevi_collect
             ->groupBy('Company')
             ->map(function ($items) {
                 return $items->sum('Actual Amount');
-            });
+            })->sortDesc();
 
         $prevmonthlyTotals = $sales_bevi_collect
             ->groupBy('TrnMonth')
             ->map(function ($items) {
                 return $items->sum('Previous Amount');
-            });
+            })->sortKeys();
 
         $beviAccountTotals = $sales_bevi_collect
             ->where('Company', 'BEVI')
+            ->where('Actual Amount', '>', 0)
             ->groupBy('ShortName')
             ->map(function ($items) {
                 return $items->sum('Actual Amount');
-            })->sortDesc()->take(6);
+            })->sortDesc();
 
         $bevaAccountTotals = $sales_bevi_collect
             ->where('Company', 'BEVA')
+            ->where('Actual Amount', '>', 0)
             ->groupBy('ShortName')
             ->map(function ($items) {
                 return $items->sum('Actual Amount');
-            })->sortDesc()->take(6);
+            })->sortDesc();
 
         $bigiAccountTotals = $sales_bevi_collect
             ->where('Company', 'BIG I')
+            ->where('Actual Amount', '>', 0)
             ->groupBy('ShortName')
             ->map(function ($items) {
                 return $items->sum('Actual Amount');
-            })->sortDesc()->take(6);
+            })->sortDesc();
 
         $beviLabels = $beviAccountTotals->keys();   
         $beviTotals = $beviAccountTotals->values();  
@@ -222,26 +229,70 @@ class HomeController extends Controller
             })
             ->sortDesc()->take(3);
 
+        $philippines = $sales_bevi_collect
+            ->where('Area Category', 'Local')
+            ->groupBy('Area')
+            ->map(function ($items) {
+                return $items->sum('Actual Amount');
+            })->sortDesc();
+
+            // dd($monthlyTotals);
+
+        $cavite = $philippines['CAVITE'];
+        $qc = $philippines['QUEZON CITY'];
+        $mn = $philippines['MANILA'];
+        $pasig = $philippines['PASIG'];
+        $pasay = $philippines['PASAY'];
+        $paraq = $philippines['PARAÑAQUE'];
+        $ceb = $philippines['CEBU'];
+        $dvo = $philippines['DAVAO'];
+        $cdo = $philippines['CAGAYAN DE ORO'];
+        $pampanga = $philippines['PAMPANGA'];
+        $zambg = $philippines['ZAMBOANGA'];
+        $albay = $philippines['ALBAY'];
+        $ilo = $philippines['ILOILO'];
+        $pangas = $philippines['PANGASINAN'];
+        $leyte = $philippines['LEYTE'];
+        $tarlac = $philippines['TARLAC'];
+        $bacld = $philippines['BACOLOD'];
+        $lucn = $philippines['LUCENA CITY'];
+        $camsur = $philippines['CAMARINES SUR'];
+        $bohol = $philippines['BOHOL'];
+        $ilonor = $philippines['ILOCOS NORTE'];
+        $taguig = $philippines['TAGUIG'];
+        $laguna = $philippines['LAGUNA'];
+        $palawan = $philippines['PALAWAN'];
+        $isabela = $philippines['ISABELA'];
+        $batct = $philippines['BATANGAS CITY'];
+        $mandaue = $philippines['MANDAUE'];
+        $munlupa = $philippines['MUNTINLUPA'];
+        $lasp = $philippines['LAS PINAS'];
+        $makati = $philippines['MAKATI'];
+        $sanj = $philippines['SAN JUAN'];
+        $rizal = $philippines['RIZAL'];
+        $bicol = $philippines['BICOL'];
+
+
         $bevimonthlyTotals = $sales_bevi_collect
             ->where('Company', 'BEVI')
             ->groupBy('TrnMonth')
             ->map(function ($items) {
                 return $items->sum('Actual Amount');
-            });
+            })->sortKeys();
 
         $bevamonthlyTotals = $sales_bevi_collect
             ->where('Company', 'BEVA')
             ->groupBy('TrnMonth')
             ->map(function ($items) {
                 return $items->sum('Actual Amount');
-            });
+            })->sortKeys();
 
         $bigimonthlyTotals = $sales_bevi_collect
             ->where('Company', 'BIG I')
             ->groupBy('TrnMonth')
             ->map(function ($items) {
                 return $items->sum('Actual Amount');
-            });
+            })->sortKeys();
        
         $dataPoints1 =  $prevmonthlyTotals->values()->toArray();
         $dataPoints2 =  $monthlyTotals->values()->toArray();
@@ -253,7 +304,7 @@ class HomeController extends Controller
 
  
         $companyTotal = $companyTotals->values()->toArray();
-        $companyName = ['BEVA', 'BEVI', 'BIG I'];
+        $companyName = $companyTotals->keys()->toArray();
   
 
 
@@ -300,6 +351,40 @@ class HomeController extends Controller
             'bigiLabels' => $bigiLabels,
             'bigiTotals' => $bigiTotals,
             'short' => $short,
+            'philippines' => $philippines,
+            'cavite' => $cavite,
+            'qc' => $qc,
+            'mn' => $mn,
+            'pasig' => $pasig,
+            'pasay' => $pasay,
+            'paraq' => $paraq,
+            'ceb' => $ceb,
+            'dvo' => $dvo,
+            'cdo' => $cdo,
+            'pampanga' => $pampanga,
+            'zambg' => $zambg,
+            'albay' => $albay,
+            'ilo' => $ilo,
+            'pangas' => $pangas,
+            'leyte' => $leyte,
+            'tarlac' => $tarlac,
+            'bacld' => $bacld,
+            'lucn' => $lucn,
+            'camsur' => $camsur,
+            'bohol' => $bohol,
+            'ilonor' => $ilonor,
+            'taguig' => $taguig,
+            'laguna' => $laguna,
+            'palawan' => $palawan,
+            'isabela' => $isabela,
+            'batct' => $batct,
+            'mandaue' => $mandaue,
+            'munlupa' => $munlupa,
+            'lasp' => $lasp,
+            'makati' => $makati,
+            'sanj' => $sanj,
+            'rizal' => $rizal,
+            'bicol' => $bicol,
 
         ]);
     }

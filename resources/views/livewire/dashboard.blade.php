@@ -73,58 +73,58 @@
                             <thead>
                                 <tr>
                                     <th>Business</th>
-                                    <th>MTD Act Potential</th>
-                                    <th>Outlook</th>
-                                    <th>To Go</th>
-                                    <th>Budget</th>
-                                    <th>Previous Year</th>
-                                    <th>Est Month Perf</th>
-                                    <th>Est Month Growth</th>
+                                    <th class="text-right">MTD Act Potential</th>
+                                    <th class="text-right">Outlook</th>
+                                    <th class="text-right">To Go</th>
+                                    <th class="text-right">Budget</th>
+                                    <th class="text-right">Previous Year</th>
+                                    <th class="text-right">Est Month Perf</th>
+                                    <th class="text-right">Est Month Growth</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>
+                                    <td >
                                         <b>BEVI:</b><br> 
                                         NKAG<br> 
                                         In-house<br> 
-                                        <b>Total BEVI</b><br> 
+                                        <b style="font-size: 24px">Total BEVI</b><br> 
 
 
                                     </td>
                                     @if(!empty($total_bevi))
-                                    <td>
+                                    <td class="text-right">
                                         <br> 
                                         {{number_format($nkag_bevi, 2, '.', ',')}}<br>
                                         {{number_format($inhouse_bevi, 2, '.', ',')}}<br>
                                         <b>{{number_format($total_bevi, 2, '.', ',')}}</b><br>
 
                                     </td>
-                                    <td>
+                                    <td class="text-right">
                                         <br> 
                                         -<br> 
                                         -<br> 
                                         -<br>  
                                     </td>
-                                    <td>
+                                    <td class="text-right">
                                         <br> 
                                         -<br> 
                                         -<br> 
                                         -<br>  
                                     </td>
-                                    <td>
+                                    <td class="text-right">
                                         <br> 
                                         {{number_format($nka_total_budget, 2, '.', ',')}}<br>    
                                         0.00<br>    
                                         <b>{{number_format($nka_total_budget, 2, '.', ',')}}</b><br>   
                                     </td>
-                                    <td>
+                                    <td class="text-right">
                                         <br> 
                                         {{number_format($nkag_bevi_py, 2, '.', ',')}}<br>    
                                         {{number_format($inhouse_bevi_py, 2, '.', ',')}}<br>    
                                         <b>{{number_format($total_bevi_py, 2, '.', ',')}}</b><br>    
                                     </td>
-                                    <td>
+                                    <td class="text-right">
                                         <br> 
                                         <b>
                                             @if($emp_nkag >= 0)
@@ -158,7 +158,7 @@
                                             @endif
                                         </b><br>   
                                     </td>
-                                    <td>
+                                    <td class="text-right">
                                         <br> 
                                         <b>
                                             @if($emg_nkag_bevi >= 0)
@@ -211,10 +211,10 @@
                                         RDG<br> 
                                         In-house Tradeworld<br> 
                                         In-house Other<br> 
-                                        <b>Total BEVA</b><br> 
+                                        <b style="font-size: 24px">Total BEVA</b><br> 
                                     </td>
                                     @if(!empty($total_bevi))
-                                    <td>
+                                    <td class="text-right">
                                         <br>
                                         {{number_format($rdg_beva, 2, '.', ',')}}<br>    
                                         {{number_format($tradeworld, 2, '.', ',')}}<br>    
@@ -222,28 +222,28 @@
                                         <b>{{number_format($total_beva, 2, '.', ',')}}</b><br>    
 
                                     </td>
-                                    <td>
+                                    <td class="text-right">
                                         <br>
                                         -<br>
                                         -<br>
                                         -<br>
                                         -<br>
                                     </td>
-                                    <td>
+                                    <td class="text-right">
                                         <br>
                                         -<br>
                                         -<br>
                                         -<br>
                                         -<br>
                                     </td>
-                                    <td>
+                                    <td class="text-right">
                                         <br>
                                         {{number_format($rdg_total_budget, 2, '.', ',')}}<br>    
                                         0.00<br>    
                                         0.00<br>    
                                         <b>{{number_format($rdg_total_budget, 2, '.', ',')}}</b><br>  
                                     </td>
-                                    <td>
+                                    <td class="text-right">
                                         <br>
                                         {{number_format($rdg_beva_py, 2, '.', ',')}}<br>    
                                         {{number_format($tradeworld_py, 2, '.', ',')}}<br>    
@@ -251,7 +251,7 @@
                                         <b>{{number_format($total_beva_py, 2, '.', ',')}}</b><br>    
 
                                     </td>
-                                <td>
+                                    <td class="text-right">
                                         <br>
                                         <b>
                                             @if($emp_rdg >= 0)
@@ -288,7 +288,7 @@
                                             @endif
                                         </b><br> 
                                     </td>
-                                    <td>
+                                    <td class="text-right">
                                         <br>
                                         <b>
                                             @if($emg_rdg_beva >= 0)
@@ -354,48 +354,48 @@
                                         <b>BIG I:</b><br> 
                                         Export<br> 
                                         Ecomm<br> 
-                                        <b>Total BIG I</b><br> 
+                                        <b style="font-size: 24px">Total BIG I</b><br> 
                                     
                                     </td>
                                     @if(!empty($total_bevi))
 
-                                    <td>
+                                    <td class="text-right">
                                         <br>
                                         {{number_format($export, 2, '.', ',')}}<br>    
                                         {{number_format($ecomm, 2, '.', ',')}}<br>    
                                         <b>{{number_format($total_bigi, 2, '.', ',')}}</b><br>    
                                     </td>
-                                    <td>
+                                    <td class="text-right">
                                         <br>
                                         -<br>
                                         -<br>
                                         -<br>
                                     </td>
-                                    <td>
+                                    <td class="text-right">
                                         <br>
                                         -<br>
                                         -<br>
                                         -<br>
                                     </td>
-                                    <td>
+                                    <td class="text-right">
                                         <br>
                                         -<br>
                                         -<br>
                                         -<br>
                                     </td>
-                                    <td>
+                                    <td class="text-right">
                                         <br>
                                         {{number_format($export_py, 2, '.', ',')}}<br>    
                                         {{number_format($ecomm_py, 2, '.', ',')}}<br>    
                                         <b>{{number_format($total_bigi_py, 2, '.', ',')}}</b><br>    
                                     </td>
-                                    <td>
+                                    <td class="text-right">
                                         <br>
                                         -<br>
                                         -<br>
                                         -<br>
                                     </td>
-                                    <td>
+                                    <td class="text-right">
                                         <br>
                                         <b>
                                             @if($emg_export >= 0)
@@ -442,6 +442,35 @@
                                     </td>
                                     @endif
                                 </tr>
+                                <tr>
+                                    <td>
+                                        <b style="font-size: 30px">GRAND TOTAL:</b><br> 
+                                    </td>
+                                    @if(!empty($total_bevi))
+
+                                    <td class="text-right">        
+                                        <b>{{number_format($allTotal, 2, '.', ',')}}</b><br>    
+                                    </td>
+                                    <td class="text-right">
+                                        -<br>
+                                    </td>
+                                    <td class="text-right">
+                                        -<br>
+                                    </td>
+                                    <td class="text-right">
+                                        -<br>
+                                    </td>
+                                    <td class="text-right">
+                                        <b>{{number_format($allTotal_py, 2, '.', ',')}}</b><br>    
+                                    </td>
+                                    <td class="text-right">
+                                        -<br>
+                                    </td>
+                                    <td class="text-right">
+                                        -<br>
+                                    </td>
+                                    @endif
+                                </tr>
                             </tbody>
                         </table>
                         
@@ -453,21 +482,99 @@
         <div class="col-md-3">
             <div class="card">
                 <div class="card-header">
+                    <h3 class="card-title">Business Units Sales</h3>
+                </div>
+                <div class="card-body table-responsive p-0">
+                    <table class="table table-striped table-valign-middle">
+                        <thead>
+                            <tr>
+                                <th>Business Units</th>
+                                <th class="text-right">Sales</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @foreach ($businessTotals as $brand => $total)
+                            <tr>
+                                <td>{{ $brand }}</td>
+                                <td class="text-right">{{ number_format($total, 2) }}</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Accounts Sales</h3>
+                </div>
+                <div class="card-body table-responsive p-0">
+                    <table class="table table-striped table-valign-middle">
+                        <thead>
+                            <tr>
+                                <th>Accounts</th>
+                                <th class="text-right">Sales</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @foreach ($accountTotals as $brand => $total)
+                            <tr>
+                                <td>{{ $brand }}</td>
+                                <td class="text-right">{{ number_format($total, 2) }}</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
                     <h3 class="card-title">Brands Sales</h3>
                 </div>
                 <div class="card-body table-responsive p-0">
                     <table class="table table-striped table-valign-middle">
                         <thead>
                             <tr>
-                                <th>Brand</th>
-                                <th>Sales</th>
+                                <th>Brands</th>
+                                <th class="text-right">Sales</th>
                             </tr>
                         </thead>
                         <tbody>
                         @foreach ($beviBrandTotals as $brand => $total)
                             <tr>
                                 <td>{{ $brand }}</td>
-                                <td>{{ number_format($total, 2) }}</td>
+                                <td class="text-right">{{ number_format($total, 2) }}</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">New Brands Sales</h3>
+                </div>
+                <div class="card-body table-responsive p-0">
+                    <table class="table table-striped table-valign-middle">
+                        <thead>
+                            <tr>
+                                <th>New Brands</th>
+                                <th class="text-right">Sales</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @foreach ($newBrandTotals as $brand => $total)
+                            <tr>
+                                <td>{{ $brand }}</td>
+                                <td class="text-right">{{ number_format($total, 2) }}</td>
                             </tr>
                         @endforeach
                         </tbody>
