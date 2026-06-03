@@ -34,6 +34,7 @@ class User extends Authenticatable
         'dark_mode',
         'google_id',
         'last_activity',
+        'hub_user_id',
     ];
 
     /**
