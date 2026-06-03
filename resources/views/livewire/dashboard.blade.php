@@ -6,6 +6,7 @@
                     <div class="form-group">
                         <select name="" class="form-control form-control-md text-uppercase" wire:model.lazy="year">
                                 <option value="0">Year</option>
+                                <option value="2026">2026</option>
                                 <option value="2025">2025</option>
                                 <option value="2024">2024</option>
                                 <option value="2023">2023</option>

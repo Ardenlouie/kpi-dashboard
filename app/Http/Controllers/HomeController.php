@@ -84,7 +84,7 @@ class HomeController extends Controller
             return number_format($num);
         };
 
-        $year = 2025;
+        $year = Carbon::now()->year; 
         $month1 = 1;
         $month2 = (int) date('m');
         $months = [];
@@ -214,8 +214,7 @@ class HomeController extends Controller
                     'previous' => $items->sum('Previous Amount'),
                 ];
             })
-            ->sortByDesc('actual')
-            ->take(5);
+            ->sortByDesc('actual');
 
         $newBrands = ['KOJIESAN + BATH', 'KOJIESAN + BODY', 'DEFENSIL ANTIBACTERIAL'];
         $newBrandTotals = $sales_bevi_collect
@@ -262,15 +261,15 @@ class HomeController extends Controller
         $taguig = $philippines['TAGUIG'];
         $laguna = $philippines['LAGUNA'];
         $palawan = $philippines['PALAWAN'];
-        $isabela = $philippines['ISABELA'];
-        $batct = $philippines['BATANGAS CITY'];
-        $mandaue = $philippines['MANDAUE'];
-        $munlupa = $philippines['MUNTINLUPA'];
-        $lasp = $philippines['LAS PINAS'];
-        $makati = $philippines['MAKATI'];
-        $sanj = $philippines['SAN JUAN'];
-        $rizal = $philippines['RIZAL'];
-        $bicol = $philippines['BICOL'];
+        // $isabela = $philippines['ISABELA'];
+        // $batct = $philippines['BATANGAS CITY'];
+        // $mandaue = $philippines['MANDAUE'];
+        // $munlupa = $philippines['MUNTINLUPA'];
+        // $lasp = $philippines['LAS PINAS'];
+        // $makati = $philippines['MAKATI'];
+        // $sanj = $philippines['SAN JUAN'];
+        // $rizal = $philippines['RIZAL'];
+        // $bicol = $philippines['BICOL'];
 
 
         $bevimonthlyTotals = $sales_bevi_collect
@@ -376,15 +375,15 @@ class HomeController extends Controller
             'taguig' => $taguig,
             'laguna' => $laguna,
             'palawan' => $palawan,
-            'isabela' => $isabela,
-            'batct' => $batct,
-            'mandaue' => $mandaue,
-            'munlupa' => $munlupa,
-            'lasp' => $lasp,
-            'makati' => $makati,
-            'sanj' => $sanj,
-            'rizal' => $rizal,
-            'bicol' => $bicol,
+            'isabela' => 0,
+            'batct' => 0,
+            'mandaue' => 0,
+            'munlupa' => 0,
+            'lasp' => 0,
+            'makati' => 0,
+            'sanj' => 0,
+            'rizal' => 0,
+            'bicol' => 0,
 
         ]);
     }
