@@ -180,7 +180,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
                     <h5 class="card-title">Monthly Recap Report</h5>
@@ -200,7 +200,7 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-8">
+                        <div class="col-md-12">
                             <p class="text-center"><strong>Sales as of: {{$datetoday}}</strong></p>
                             
                             <div class="chart">
@@ -242,37 +242,7 @@
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <p class="text-center">
-                                <strong>Brands Sales Progress (Current vs Previous)</strong>
-                            </p>
-                            @foreach ($allBrandTotals as $brand => $total)
-                            @php    
-                                $percentBrand = $total['previous'] != 0
-                                ? ($total['actual'] / $total['previous']) * 100
-                                : 0;
-
-                                $color = 'bg-danger'; // default red
-                                if ($percentBrand >= 75) $color = 'bg-red';
-                                elseif ($percentBrand >= 50) $color = 'bg-secondary';
-                                elseif ($percentBrand >= 25) $color = 'bg-warning';
-                                
-                            @endphp
-                            <div class="progress-group">
-                                <img src="{{asset('/images/'.$brand.'1.png')}}" alt="Product 1" class="img-square img-size-50 mr-2">
-
-                                {{$brand}}
-                                <span class="float-right"><b>{{$short($total['actual'], 2, '.', ',')}}</b>/{{$short($total['previous'], 2, '.', ',')}}</span>
-                                <div class="progress progress-xl">
-                                    <div class="progress-bar {{ $color }} text-bold text-md" 
-                                        role="progressbar"
-                                        style="width: {{ number_format($percentBrand, 2) }}%"
-                                        aria-valuenow="{{ $percentBrand }}"
-                                        aria-valuemin="0" aria-valuemax="100">
-                                        {{ number_format($percentBrand, 2) }}%
-                                    </div>
-                                </div>
-                            </div>
-                            @endforeach
+                            
                             <!-- <p class="text-center"><strong>Top Accounts</strong></p>
                             <table class="table table-bordered">
                                 <tbody>
@@ -399,6 +369,43 @@
                 </div>
             </div>
         </div>
+         <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title"><strong>Brands Sales Progress (Current vs Previous)</strong></h3>
+                </div>
+                <div class="card-body" style="max-height: 350px; overflow: auto;">
+                    @foreach ($allBrandTotals as $brand => $total)
+                    @php    
+                        $percentBrand = $total['previous'] != 0
+                        ? ($total['actual'] / $total['previous']) * 100
+                        : 0;
+
+                        $color = 'bg-danger'; // default red
+                        if ($percentBrand >= 75) $color = 'bg-red';
+                        elseif ($percentBrand >= 50) $color = 'bg-secondary';
+                        elseif ($percentBrand >= 25) $color = 'bg-warning';
+                        
+                    @endphp
+                    <div class="progress-group">
+                        <img src="{{asset('/images/'.$brand.'.png')}}" alt="Product 1" class="img-square img-size-50 mr-2">
+
+                        {{$brand}}
+                        <span class="float-right"><b>{{$short($total['actual'], 2, '.', ',')}}</b>/{{$short($total['previous'], 2, '.', ',')}}</span>
+                        <div class="progress progress-xl">
+                            <div class="progress-bar {{ $color }} text-bold text-md" 
+                                role="progressbar"
+                                style="width: {{ number_format($percentBrand, 2) }}%"
+                                aria-valuenow="{{ $percentBrand }}"
+                                aria-valuemin="0" aria-valuemax="100">
+                                {{ number_format($percentBrand, 2) }}%
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
         <div class="col-md-3">
             <div class="card">
                 <div class="card-header">
@@ -499,7 +506,7 @@
                 datasets: [
                     {
                         type: 'bar',
-                        label: '2024', // Dataset label
+                        label: '2025', // Dataset label
                         data: dataPoints1, // Data points
                         backgroundColor: [
                             'rgba(147, 147, 147, 1)'
@@ -509,12 +516,12 @@
 
                         ],
                         borderWidth: 1, // Border width
-                        years: '2024',
+                        years: '2025',
                         
                     },
                     {
                         type: 'bar',
-                        label: '2025', // Dataset label
+                        label: '2026', // Dataset label
                         data: dataPoints2, // Data points
                         backgroundColor: [
                             'rgba(190, 0, 0, 1)'
@@ -525,7 +532,7 @@
 
                         ],
                         borderWidth: 1, 
-                        years: '2025',
+                        years: '2026',
             
                         
                     },
@@ -710,7 +717,7 @@
                 barChart.data.datasets = [
                     {
                         type: 'bar',
-                        label: '2024', // Dataset label
+                        label: '2025', // Dataset label
                         data: dataPoints1, // Data points
                         backgroundColor: [
                             'rgba(147, 147, 147, 1)'
@@ -720,12 +727,12 @@
 
                         ],
                         borderWidth: 1, // Border width
-                        years: '2024',
+                        years: '2025',
                         
                     },
                     {
                         type: 'bar',
-                        label: '2025', // Dataset label
+                        label: '2026', // Dataset label
                         data: dataPoints2, // Data points
                         backgroundColor: [
                             'rgba(190, 0, 0, 1)'
@@ -736,7 +743,7 @@
 
                         ],
                         borderWidth: 1, 
-                        years: '2025',
+                        years: '2026',
             
                         
                     },
